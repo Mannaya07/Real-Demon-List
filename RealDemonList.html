@@ -1,0 +1,883 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Real Demon List</title>
+<style>
+:root {
+  --blue:#1683d8;
+  --green:#269b52;
+  --border:#d9dfe5;
+  --text:#303840;
+  --muted:#707982;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--text);font:14px Arial,Helvetica,sans-serif}
+header{border-bottom:1px solid var(--border);background:#fff}
+.header-inner,.nav-inner,main{max-width:1050px;margin:auto;padding-left:18px;padding-right:18px}
+.header-inner{padding-top:22px;padding-bottom:16px}
+.logo{font-size:29px;font-weight:800;letter-spacing:-1px;color:var(--blue)}
+.subtitle{margin-top:5px;color:var(--muted);font-size:13px}
+nav{background:#f7f8fa;border-bottom:1px solid var(--border)}
+.nav-inner{display:flex;gap:20px;padding-top:11px;padding-bottom:11px}
+nav a{color:var(--blue);font-weight:600;text-decoration:none}
+main{margin-top:24px;margin-bottom:40px}
+.page{display:none}
+.page.active{display:block}
+h1{font-size:25px;margin:0 0 8px}
+.description{color:var(--muted);line-height:1.5;margin-bottom:18px}
+#search{width:100%;padding:11px 12px;border:1px solid #cbd3da;border-radius:4px;font-size:14px;margin-bottom:16px}
+.count{color:var(--muted);font-size:12px;margin-bottom:10px}
+#training-section{margin-top:44px}
+.training-title{margin:0 0 6px;font-size:26px}
+.training-empty{padding:18px 12px;color:#888;font-style:italic;border:1px solid var(--border);border-radius:4px;background:#fff}
+.list{border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.demon-row{display:grid;grid-template-columns:42px 120px minmax(0,1fr) auto;gap:13px;align-items:center;padding:10px 12px;min-height:90px;border-bottom:1px solid #e6e9ed}
+.demon-row:last-child{border-bottom:0}
+.demon-row:nth-child(even){background:#f8f9fa}
+.rank{text-align:center;font-size:20px;font-weight:700;color:#727b84}
+.thumb-button,.name-button{padding:0;border:0;background:transparent;cursor:pointer;text-align:left}
+.demon-thumbnail{display:block;width:120px;height:68px;object-fit:cover;border-radius:3px;border:1px solid #dce1e5;background:#e9edf0}
+.demon-name{display:block;color:var(--blue);font-size:16px;font-weight:700;margin-bottom:6px}
+.name-button:hover .demon-name{text-decoration:underline}
+.creator{font-size:12px;color:var(--muted)}
+.try-button{display:inline-block;padding:9px 14px;border:1px solid #218745;border-radius:4px;background:var(--green);color:white;font-size:12px;font-weight:700;text-decoration:none;text-align:center;cursor:pointer}
+.try-button:hover{background:#218745}
+.back-button{margin-bottom:18px;padding:9px 13px;border:1px solid var(--border);border-radius:4px;background:#f7f8fa;color:var(--blue);cursor:pointer}
+.detail-card{border:1px solid var(--border);border-radius:5px;overflow:hidden}
+.detail-heading{padding:18px;background:#f6f8fa;border-bottom:1px solid var(--border)}
+.detail-heading h1{margin-bottom:8px}
+.detail-meta{color:var(--muted)}
+.detail-body{padding:20px}
+.video-container{width:100%;max-width:800px;margin:0 auto 24px;aspect-ratio:16/9;background:#111;display:flex;align-items:center;justify-content:center}
+#demon-video{width:100%;height:100%;object-fit:contain}
+#demon-frame{width:100%;height:100%;border:0}
+.yt-button{background:#c4302b;border-color:#a32621}
+.yt-button:hover{background:#a32621}
+.video-actions{margin:-12px 0 20px}
+.video-placeholder{color:white;text-align:center;padding:20px;line-height:1.7}
+.detail-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:12px 0 26px}
+.startpos-button{background:var(--blue);border-color:#116bb3}
+.startpos-button:hover{background:#116bb3}
+.nav-inner{flex-wrap:wrap;align-items:center}
+.nav-right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.submit-button{padding:7px 12px;border:1px solid #116bb3;border-radius:4px;background:var(--blue);color:#fff !important;font-size:12px;text-transform:uppercase}
+.submit-button:hover{background:#116bb3}
+.lang-btn{padding:6px 9px;border:1px solid var(--border);border-radius:4px;background:#fff;color:var(--blue);font-size:12px;font-weight:700;cursor:pointer}
+.lang-btn.active{background:var(--blue);border-color:var(--blue);color:#fff}
+#info-content{line-height:1.6;max-width:820px}
+#info-content code{background:#f1f3f5;padding:1px 5px;border-radius:3px}
+.players-title{font-size:18px;margin:20px 0 10px}
+.players-list{min-height:45px;padding:12px 15px;border:1px solid var(--border);border-radius:4px;background:#fff;line-height:1.9}
+.player-entry{padding:4px 0;border-bottom:1px solid #edf0f2}
+.player-entry:last-child{border-bottom:0}
+.no-players{color:#888;font-style:italic}
+.players-tools{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+#players-search{flex:1;padding:9px 11px;border:1px solid #cbd3da;border-radius:4px;font-size:13px}
+.players-count{color:var(--muted);font-size:12px;white-space:nowrap}
+.player-link{display:block;width:100%;padding:4px 0;border:0;background:transparent;color:var(--blue);font:inherit;font-weight:600;text-align:left;cursor:pointer}
+.player-link:hover{text-decoration:underline}
+.more-button{display:block;margin:12px auto 0;padding:9px 16px;border:1px solid var(--border);border-radius:4px;background:#f7f8fa;color:var(--blue);cursor:pointer}
+#player-video,#player-frame{width:100%;height:100%;border:0}
+#player-video{object-fit:contain}
+footer{border-top:1px solid var(--border);color:var(--muted);padding:18px;text-align:center;font-size:12px}
+@media(max-width:620px){
+ .demon-row{grid-template-columns:28px 78px minmax(0,1fr);gap:8px;padding:9px 7px}
+ .demon-thumbnail{width:78px;height:52px}
+ .rank{font-size:16px}
+ .demon-name{font-size:14px}
+ .row-try{grid-column:3}
+ .try-button{padding:7px 11px}
+ .logo{font-size:25px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="logo">Real Demon List</div>
+    <div class="subtitle" data-i18n="subtitle"></div>
+  </div>
+</header>
+<nav>
+  <div class="nav-inner">
+    <a href="#" id="home-link" data-i18n="nav_list"></a>
+    <a href="#" id="info-link" data-i18n="nav_info"></a>
+    <div class="nav-right">
+      <a href="#" id="submit-link" class="submit-button" target="_blank" rel="noopener noreferrer" data-i18n="submit"></a>
+      <button type="button" class="lang-btn" data-lang="en">EN</button>
+      <button type="button" class="lang-btn" data-lang="it">IT</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section id="list-page" class="page active">
+    <h1 data-i18n="list_title"></h1>
+    <div class="description" data-i18n="list_desc"></div>
+    <input id="search" type="search" data-i18n-ph="search_ph">
+    <div class="count" id="count"></div>
+    <div class="list" id="demon-list"></div>
+
+    <div id="training-section">
+      <h2 class="training-title" data-i18n="training_title"></h2>
+      <div class="description" data-i18n="training_desc"></div>
+      <div class="count" id="training-count"></div>
+      <div class="list" id="training-list"></div>
+    </div>
+  </section>
+
+  <section id="detail-page" class="page">
+    <button class="back-button" id="back-button" data-i18n="back_list"></button>
+    <div class="detail-card">
+      <div class="detail-heading">
+        <h1 id="detail-name"></h1>
+        <div class="detail-meta" id="detail-meta"></div>
+      </div>
+      <div class="detail-body">
+        <div class="video-container">
+          <div class="video-placeholder" id="video-placeholder" data-i18n-html="video_missing"></div>
+          <video id="demon-video" controls preload="metadata" style="display:none"></video>
+          <iframe id="demon-frame" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" style="display:none"></iframe>
+        </div>
+        <div class="detail-actions video-actions">
+          <a id="demon-yt" class="try-button yt-button" href="#" target="_blank" rel="noopener noreferrer" style="display:none" data-i18n="watch_yt"></a>
+        </div>
+        <div class="detail-actions">
+          <a id="detail-try" class="try-button" href="#" data-i18n="try_download"></a>
+          <a id="detail-startpos" class="try-button startpos-button" href="#" data-i18n="startpos"></a>
+        </div>
+        <h2 class="players-title" data-i18n="players_title"></h2>
+        <div class="players-tools">
+          <input id="players-search" type="search" data-i18n-ph="players_search_ph">
+          <span class="players-count" id="players-count"></span>
+        </div>
+        <div id="players-list" class="players-list"></div>
+        <button type="button" class="more-button" id="players-more" style="display:none" data-i18n="show_more"></button>
+      </div>
+    </div>
+  </section>
+
+  <section id="player-page" class="page">
+    <button class="back-button" id="player-back" data-i18n="back_level"></button>
+    <div class="detail-card">
+      <div class="detail-heading">
+        <h1 id="player-name"></h1>
+        <div class="detail-meta" id="player-meta"></div>
+      </div>
+      <div class="detail-body">
+        <div class="video-container">
+          <div class="video-placeholder" id="player-placeholder" data-i18n-html="player_missing"></div>
+          <video id="player-video" controls preload="metadata" style="display:none"></video>
+          <iframe id="player-frame" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" style="display:none"></iframe>
+        </div>
+        <div class="detail-actions video-actions">
+          <a id="player-yt" class="try-button yt-button" href="#" target="_blank" rel="noopener noreferrer" style="display:none" data-i18n="watch_yt"></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="info-page" class="page">
+    <button class="back-button" id="info-back" data-i18n="back_list"></button>
+    <h1 data-i18n="nav_info"></h1>
+    <div id="info-content"></div>
+  </section>
+</main>
+
+<footer data-i18n="footer"></footer>
+
+<script src="info.js"></script>
+<script src="videos.js"></script>
+<script src="training.js"></script>
+<script>
+/*
+ * LISTA STORICA: nomi e creatori trascritti dall'elenco fornito.
+ * L'ordine dell'array determina la posizione in classifica.
+ * Non mostrare lo stato legacy.
+ */
+const demons = [
+["Tartarus","-"],
+["The Golden","BoBoBoBoBoBoBo"],
+["Zodiac","Bianox"],
+["Kenos","npesta"],
+["Crimson Planet","TrueOmega"],
+["Renevant","nikroplays"],
+["Cold Sweat","para"],
+["Cognition","Endlevel"],
+["Thinking Space","Atomic"],
+["Calculator Core","Walroose"],
+["Lucid Nightmares","CairoX"],
+["Bloodlust","knobbelboy"],
+["Ragnarok","knobbelboy"],
+["Deimos","Endlevel"],
+["Arctic Lights","Metalface221"],
+["Aronia","Exen"],
+["kowareta","Gablor"],
+["Visible Ray","Krampux"],
+["The Yandere","Dorami"],
+["Aquatic Auroras","Endlevel"],
+["Wasureta","HelpegasuS"],
+["Ouroboros","ViPriN"],
+["Plasma Pulse Finale","Smokes"],
+["Hyper Paracosm","iIiViRuZiIi"],
+["Sigma","MindCap"],
+["Gamma","MindCap"],
+["Necromancer","TGI"],
+["Spacial Rend","Eclipsed"],
+["Sonic Wave","Sunix"],
+["Generic Wave","Pennutoh"],
+["Edge of the Blade","kiseta"],
+["Spectrum Cyclone","Temp"],
+["Macabre","ZephiroX"],
+["Yatagarasu","TrusTa"],
+["Omega","MindCap"],
+["Titan Complex","TCTeam"],
+["Omicron","Team Proxima"],
+["WOW","TrusTa"],
+["Rage","nSwish"],
+["Erebus","BoldStep"],
+["Devil Vortex","Rustam"],
+["Dark Flare","KeiAs"],
+["Celestial Force","MindCap"],
+["Sunset Sandstorm","crohn44"],
+["xo","KrmaL"],
+["ZAPHKIEL","Darwin"],
+["Molten Gear","knobbelboy"],
+["Digital Descent","ViPriN"],
+["Paroxysm","Lemons"],
+["Tapwreck","MrLorenzo"],
+["Freedom08","Pennutoh"],
+["Altered Ascent","Prism"],
+["Cadrega City","Pennutoh"],
+["Stalemate Redux","TehTactiq"],
+["Catalyze","ZephiroX"],
+["Step To Hell","LaZye"],
+["Photovoltaic II","Mazl"],
+["Killbot","BoldStep"],
+["Delta Interface","Platnuu"],
+["Factory Realm X","HelpegasuS"],
+["Tempered Steel","ItsHybrid"],
+["Demonicat","f3lixsram"],
+["Auditory Breaker","LazerBlitz"],
+["Artificial Ascent","ViPriN"],
+["Carcano","Asuith"],
+["Fabrication","KeiAs"],
+["Ethereal Artifice","zeroya"],
+["BBBBBBBBBBBBBBBBBBBB","RoiMousti"],
+["Missing Benefits","TGI"],
+["Aesthetic","SyQual"],
+["Chromatic Haze","Cirtrax"],
+["Quantum Processing","Riot"],
+["Glowy","Rob Buck"],
+["Cadrega Mode","TCTeam"],
+["Ziroikabi","RoiMousti"],
+["Rate Demon","RoiMousti"],
+["Occult Outcry","Havok"],
+["Void Wave","cherryteam"],
+["Bausha Vortex","Pennutoh"],
+["Balengu Vortex","Temp"],
+["Yuh","lFritz"],
+["Belloq","Sminx"],
+["The Hell Field","Stormfly"],
+["Black Blizzard","KrmaL"],
+["Ziroikapi","Kapinapi"],
+["Hatred","AZuLer4"],
+["distraught","alkali"],
+["Hyper Paradox","ItsHybrid"],
+["Dolos","Enzeux"],
+["BuTiTi III","JonathanGD"],
+["Furious Flames","Eggnog"],
+["Tenth Circle","DeniPol"],
+["Surge of the Shield","Geo"],
+["super probably level","alkali"],
+["Audio Expulsion","GoodSmile"],
+["Astral Divinity","knobbelboy"],
+["2 1 1","[HOLA] SrGuillester"],
+["Bass Cave","Bloodshot"],
+["SINGULARITY","Bianox"],
+["Anoxysm","Lemons"],
+["SubSonic","ViPriN"],
+["The Hell Zone","Stormfly"],
+["Surge of Memories","TMNGaming"],
+["Shock Therapy","Arb"],
+["SPEEDRUN","Kaito"],
+["Glitched Memories","TCTeam"],
+["Infernal Abyss","Ggb0y"],
+["Athanatos","Exenity"],
+["Berserk","TrusTa"],
+["Galactic Shift","TeamSmokeWeed"],
+["Shock Breaker","Spectex"],
+["Breakout Redux","Waivve"],
+["Ithacropolis","BIGMAC77"],
+["The Hell World","Stormfly"],
+["TeaM Z","99Percent"],
+["Fabricated Thoughts","MaxiKD"],
+["Disentombed","YakobNugget"],
+["MadMansion","GunnerBones"],
+["Mystic","Endlevel"],
+["Fusion Z","PlebKingdom"],
+["The Hell Origin","Stormfly"],
+["EnvY","DanZmeN"],
+["Asmodeus","Vexion"],
+["Low Death","KrmaL"],
+["Falcon16","Lieb"],
+["Carnage Mode","Findexi"],
+["VendetTa","CFteamgd"],
+["Dimension Breaker","Bianox"],
+["Phobos","KrmaL"],
+["Sakupen Hell","TrusTa"],
+["Dimensional Breaking","Dalfa"],
+["Ancestral Calamity","MrSpaghetti"],
+["Silentium Gradas","Stormfly"],
+["Blade of Justice","Manix648"],
+["Biohazard","ARtu"],
+["Betrayal of Fate","weoweoteo"],
+["Artifice","f3lixsram"],
+["Epsilon","Team Proxima"],
+["Atmosphere","VoidSquad"],
+["Bloodbath","Riot"],
+["Glacial Torrent","Nell"],
+["ElectroLux","Zafkiel"],
+["Molten Mercury","ItsHybrid"],
+["Under lavaland","N R G"],
+["Hateful Reflection","GD Iris"],
+["Ecstasy","SleyGD"],
+["ATMarbl","Pennutoh"],
+["Azure Fiesta","Dorami"],
+["The Hell Bird","Havok"],
+["Down Bass","Spectra"]
+];
+
+/*
+ * LINGUA: il sito parte SEMPRE in inglese; il visitatore puo' passare a italiano (EN / IT).
+ * Il testo della pagina Info e il link Discord stanno nel file info.js.
+ */
+const I18N = {
+  en: {
+    training_title: "Extreme Training Grounds",
+    training_desc: "Easier Extreme Demons to practice on before taking on the list.",
+    training_empty: "Coming soon.",
+    subtitle: "Demonlist",
+    nav_list: "Demon List",
+    nav_info: "Info",
+    submit: "Submit record",
+    list_title: "Top 150 Demons",
+    list_desc: "Demonlist",
+    search_ph: "Search demons...",
+    back_list: "← Back to the Demonlist",
+    back_level: "← Back to the level",
+    video_missing: "Video not available yet.",
+    player_missing: "Video not available yet.",
+    yt_local: "This video is hosted on YouTube.<br>It plays here once the site is online. For now use the button below.",
+    watch_yt: "WATCH ON YOUTUBE",
+    try_download: "TRY / DOWNLOAD LEVEL",
+    startpos: "DOWNLOAD STARTPOS",
+    try: "TRY",
+    players_title: "Players who have beaten this level",
+    players_search_ph: "Search player...",
+    show_more: "Show more",
+    no_players: "No players listed.",
+    no_match: "No players found.",
+    loading: "Loading...",
+    showing_players: "Showing {a} of {b}",
+    showing_demons: "Showing {a} of {b} demons",
+    published_by: "Published by: ",
+    completion_of: "Completion of: ",
+    download_title: "Download ",
+    open: "Open ",
+    level_missing: "Level file not found: ",
+    startpos_missing: "Startpos zip not found: ",
+    footer: "Demonlist"
+  },
+  it: {
+    training_title: "Extreme Training Grounds",
+    training_desc: "Extreme Demon più facili su cui allenarti prima di affrontare la lista.",
+    training_empty: "Prossimamente.",
+    subtitle: "Demonlist",
+    nav_list: "Lista Demon",
+    nav_info: "Info",
+    submit: "Invia record",
+    list_title: "Top 150 Demon",
+    list_desc: "Demonlist",
+    search_ph: "Cerca demon...",
+    back_list: "← Torna alla Demonlist",
+    back_level: "← Torna al livello",
+    video_missing: "Video non ancora disponibile.",
+    player_missing: "Video non ancora disponibile.",
+    yt_local: "Questo video è su YouTube.<br>Si vede qui quando il sito è online. Per ora usa il pulsante qui sotto.",
+    watch_yt: "GUARDA SU YOUTUBE",
+    try_download: "PROVA / SCARICA IL LIVELLO",
+    startpos: "SCARICA STARTPOS",
+    try: "PROVA",
+    players_title: "Giocatori che hanno completato questo livello",
+    players_search_ph: "Cerca giocatore...",
+    show_more: "Mostra altri",
+    no_players: "Nessun giocatore elencato.",
+    no_match: "Nessun giocatore trovato.",
+    loading: "Caricamento...",
+    showing_players: "Mostrati {a} di {b}",
+    showing_demons: "Mostrati {a} di {b} demon",
+    published_by: "Pubblicato da: ",
+    completion_of: "Completion di: ",
+    download_title: "Scarica ",
+    open: "Apri ",
+    level_missing: "File del livello non trovato: ",
+    startpos_missing: "Zip dello startpos non trovato: ",
+    footer: "Archivio Demonlist"
+  }
+};
+let lang = "en";
+function t(key, vars) {
+  let str = (I18N[lang] && I18N[lang][key]) || I18N.en[key] || key;
+  if (vars) for (const k in vars) str = str.replace("{" + k + "}", vars[k]);
+  return str;
+}
+let currentDemon = null;
+let currentPlayer = null;
+
+/*
+ * GIOCATORI: modifica i nomi qui sotto nel codice.
+ * Nessun campo di modifica viene mostrato ai visitatori.
+ * Esempio:
+ * "Tartarus": ["PlayerUno", "PlayerDue"]
+ */
+
+const listEl = document.getElementById("demon-list");
+const searchEl = document.getElementById("search");
+const countEl = document.getElementById("count");
+
+function thumbnailPath(name, extensionIndex = 0) {
+  const extensions = [".png", ".jpg", ".jpeg", ".webp"];
+  return extensionIndex < extensions.length
+    ? "thumbnail/" + name + extensions[extensionIndex]
+    : "thumbnail/placeholder.png";
+}
+
+/* Video del livello: link YouTube (o percorso mp4) preso da videos.js */
+function levelVideo(name) {
+  return (typeof LEVEL_VIDEOS !== "undefined" && LEVEL_VIDEOS[name]) || "";
+}
+
+function youtubeId(url) {
+  const m = String(url || "").match(/(?:youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{11})/);
+  return m ? m[1] : null;
+}
+
+function stopMedia(prefix) {
+  const video = document.getElementById(prefix + "-video");
+  video.pause();
+  video.removeAttribute("src");
+  video.style.display = "none";
+  document.getElementById(prefix + "-frame").removeAttribute("src");
+}
+
+/* prefix: "demon" (pagina livello) oppure "player" (pagina giocatore) */
+function setVideo(prefix, src) {
+  const video = document.getElementById(prefix + "-video");
+  const frame = document.getElementById(prefix + "-frame");
+  const placeholder = document.getElementById(prefix === "demon" ? "video-placeholder" : "player-placeholder");
+  const link = document.getElementById(prefix + "-yt");
+  const missingKey = prefix === "demon" ? "video_missing" : "player_missing";
+
+  stopMedia(prefix);
+  frame.style.display = "none";
+  link.style.display = "none";
+  placeholder.dataset.i18nHtml = missingKey;
+  placeholder.innerHTML = t(missingKey);
+  placeholder.style.display = "block";
+  if (!src) return;
+
+  const id = youtubeId(src);
+  if (id) {
+    link.href = "https://www.youtube.com/watch?v=" + id;
+    link.style.display = "inline-block";
+    if (/^https?:$/.test(location.protocol)) {
+      frame.src = "https://www.youtube.com/embed/" + id;
+      frame.style.display = "block";
+      placeholder.style.display = "none";
+    } else {
+      /* Aperto da file:// YouTube blocca l'embed: resta il pulsante */
+      placeholder.dataset.i18nHtml = "yt_local";
+      placeholder.innerHTML = t("yt_local");
+    }
+  } else {
+    video.onerror = () => { video.style.display = "none"; placeholder.style.display = "block"; };
+    video.onloadeddata = () => { video.style.display = "block"; placeholder.style.display = "none"; };
+    video.src = src;
+    video.load();
+  }
+}
+
+function levelPath(name) {
+  return "Levels/" + encodeURIComponent(name) + ".gmd2";
+}
+
+/*
+ * Download: lasciamo fare al browser un normale click su <a href download>.
+ * E' un'azione "dell'utente" quindi Chrome/Firefox non la bloccano come
+ * "download automatico multiplo" (cosa che succedeva con fetch/iframe).
+ * Funziona uguale offline (file://) e online (http/https).
+ * Solo online, in background, controlliamo che il file esista per avvisarti se manca.
+ */
+document.addEventListener("click", event => {
+  const link = event.target.closest("a[data-level]");
+  if (!link || !/^https?:$/.test(location.protocol)) return;
+  const path = link.getAttribute("href");
+  fetch(path, { method: "HEAD" }).then(res => {
+    if (!res.ok) alert(t(link.dataset.missing || "level_missing") + path);
+  }).catch(() => {});
+});
+
+function openPage(id) {
+  if (id !== "detail-page") stopMedia("demon");
+  if (id !== "player-page") stopMedia("player");
+  document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  window.scrollTo(0, 0);
+}
+
+function createTryButton(name) {
+  const link = document.createElement("a");
+  link.className = "try-button";
+  link.textContent = t("try");
+  link.href = levelPath(name);
+  link.setAttribute("download", name + ".gmd2");
+  link.dataset.level = name;
+  link.dataset.missing = "level_missing";
+  link.title = t("download_title") + name + ".gmd2";
+  return link;
+}
+
+/*
+ * GIOCATORI IN FILE ESTERNI (caricati solo quando apri il livello).
+ * players/<Livello>.js  (se enorme: <Livello>.2.js, <Livello>.3.js ... caricati in sequenza)
+ * Ogni file contiene: registerPlayers("Livello", [ ["Nome","https://youtu.be/XXXXXXXXXXX"] ]);
+ * Video: link YouTube come secondo valore, ["Nome","https://youtu.be/XXXXXXXXXXX"]; senza link: "Video not available yet"
+ * Usa <script> e non fetch/JSON, cosi' funziona anche offline da file://.
+ */
+const playersData = {};
+const playersLoaded = {};
+const PLAYERS_CHUNK = 100;
+let currentLevel = "";
+let currentFilter = "";
+let shownPlayers = PLAYERS_CHUNK;
+let loadToken = 0;
+let currentPlayerLevel = "";
+
+function registerPlayers(level, list) {
+  const arr = playersData[level] || (playersData[level] = []);
+  for (let i = 0; i < list.length; i++) arr.push(list[i]);
+}
+
+function loadScript(src) {
+  return new Promise(resolve => {
+    const el = document.createElement("script");
+    el.src = src;
+    el.onload = () => { el.remove(); resolve(true); };
+    el.onerror = () => { el.remove(); resolve(false); };
+    document.head.appendChild(el);
+  });
+}
+
+async function loadPlayers(name) {
+  if (playersLoaded[name]) return;
+  const base = "players/" + encodeURIComponent(name);
+  let part = 1;
+  while (true) {
+    const ok = await loadScript(part === 1 ? base + ".js" : base + "." + part + ".js");
+    if (!ok) break;
+    part++;
+  }
+  playersLoaded[name] = true;
+}
+
+function playerName(entry) { return Array.isArray(entry) ? entry[0] : String(entry); }
+function playerVideo(level, entry) {
+  return (Array.isArray(entry) && entry[1]) ? entry[1] : "";
+}
+
+function renderPlayers() {
+  const container = document.getElementById("players-list");
+  const countEl = document.getElementById("players-count");
+  const moreBtn = document.getElementById("players-more");
+  container.replaceChildren();
+  const all = playersData[currentLevel] || [];
+
+  if (!all.length) {
+    const empty = document.createElement("div");
+    empty.className = "no-players";
+    empty.textContent = t("no_players");
+    container.appendChild(empty);
+    countEl.textContent = "";
+    moreBtn.style.display = "none";
+    return;
+  }
+
+  const q = currentFilter.trim().toLowerCase();
+  const matches = [];
+  for (let i = 0; i < all.length; i++) {
+    if (!q || playerName(all[i]).toLowerCase().includes(q)) matches.push(all[i]);
+  }
+
+  const frag = document.createDocumentFragment();
+  const limit = Math.min(shownPlayers, matches.length);
+  for (let i = 0; i < limit; i++) {
+    const entry = matches[i];
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "player-link";
+    btn.textContent = playerName(entry);
+    btn.addEventListener("click", () => openPlayer(currentLevel, entry));
+    frag.appendChild(btn);
+  }
+  if (!matches.length) {
+    const empty = document.createElement("div");
+    empty.className = "no-players";
+    empty.textContent = t("no_match");
+    frag.appendChild(empty);
+  }
+  container.appendChild(frag);
+  countEl.textContent = t("showing_players", { a: limit, b: matches.length });
+  moreBtn.style.display = limit < matches.length ? "block" : "none";
+}
+
+async function showPlayers(name) {
+  const token = ++loadToken;
+  currentLevel = name;
+  currentFilter = "";
+  shownPlayers = PLAYERS_CHUNK;
+  document.getElementById("players-search").value = "";
+  const container = document.getElementById("players-list");
+  container.replaceChildren();
+  document.getElementById("players-count").textContent = "";
+  document.getElementById("players-more").style.display = "none";
+  if (!playersLoaded[name]) {
+    const loading = document.createElement("div");
+    loading.className = "no-players";
+    loading.textContent = t("loading");
+    container.appendChild(loading);
+    await loadPlayers(name);
+    if (token !== loadToken) return;
+  }
+  renderPlayers();
+}
+
+function refreshPlayer() {
+  document.getElementById("player-name").textContent = currentPlayer.name;
+  document.getElementById("player-meta").textContent = t("completion_of") + currentPlayer.level;
+}
+
+function refreshDetail() {
+  document.getElementById("detail-name").textContent = currentDemon.label + " " + currentDemon.name;
+  document.getElementById("detail-meta").textContent = t("published_by") + currentDemon.creator;
+}
+
+function openPlayer(level, entry) {
+  currentPlayerLevel = level;
+  const name = playerName(entry);
+  currentPlayer = { level: level, name: name };
+  refreshPlayer();
+
+  setVideo("player", playerVideo(level, entry));
+  openPage("player-page");
+}
+
+function openDemon(demon, rank, label) {
+  const name = demon[0];
+  currentDemon = { name: name, rank: rank, label: label || ("#" + rank), creator: demon[1] };
+  refreshDetail();
+
+  setVideo("demon", levelVideo(name));
+
+  const detailTry = document.getElementById("detail-try");
+  detailTry.href = levelPath(name);
+  detailTry.setAttribute("download", name + ".gmd2");
+  detailTry.dataset.level = name;
+  detailTry.dataset.missing = "level_missing";
+
+  /* Startpos: startpos/<NomeLivello>.zip (basta aggiungere il file, nessuna modifica al codice) */
+  const startpos = document.getElementById("detail-startpos");
+  startpos.href = "startpos/" + encodeURIComponent(name) + ".zip";
+  startpos.setAttribute("download", name + ".zip");
+  startpos.dataset.level = name;
+  startpos.dataset.missing = "startpos_missing";
+
+  showPlayers(name);
+  openPage("detail-page");
+}
+
+function createThumbnail(name) {
+  const img = document.createElement("img");
+  img.className = "demon-thumbnail";
+  img.alt = name;
+  img.loading = "lazy";
+  let extensionIndex = 0;
+  let triedYoutube = false;
+  const yid = youtubeId(levelVideo(name));
+
+  img.onerror = function() {
+    extensionIndex++;
+    if (extensionIndex < 4) {
+      img.src = thumbnailPath(name, extensionIndex);
+    } else if (yid && !triedYoutube) {
+      /* Nessuna miniatura locale: usa quella di YouTube (solo online) */
+      triedYoutube = true;
+      img.src = "https://i.ytimg.com/vi/" + yid + "/mqdefault.jpg";
+    } else {
+      img.onerror = null;
+      img.src = "thumbnail/placeholder.png";
+      img.onerror = function() {
+        img.onerror = null;
+        img.style.visibility = "hidden";
+      };
+    }
+  };
+
+  img.src = thumbnailPath(name, 0);
+  return img;
+}
+
+/* Livelli della sezione Training: elencati in training.js (stesso formato della lista) */
+const trainingDemons = (typeof TRAINING_DEMONS !== "undefined") ? TRAINING_DEMONS : [];
+
+function renderRows(target, items, query, isTraining) {
+  target.replaceChildren();
+  let shown = 0;
+
+  items.forEach((demon, index) => {
+    const rank = index + 1;
+    const label = isTraining ? "T" + rank : "#" + rank;
+    const name = demon[0];
+    const creator = demon[1];
+
+    if (
+      !name.toLowerCase().includes(query) &&
+      !creator.toLowerCase().includes(query) &&
+      !label.toLowerCase().includes(query) &&
+      !(!isTraining && String(rank).includes(query))
+    ) return;
+
+    shown++;
+
+    const row = document.createElement("div");
+    row.className = "demon-row";
+
+    const rankEl = document.createElement("div");
+    rankEl.className = "rank";
+    rankEl.textContent = isTraining ? "T" + rank : rank;
+
+    const thumbButton = document.createElement("button");
+    thumbButton.className = "thumb-button";
+    thumbButton.type = "button";
+    thumbButton.setAttribute("aria-label", t("open") + name);
+    thumbButton.appendChild(createThumbnail(name));
+    thumbButton.addEventListener("click", () => openDemon(demon, rank, label));
+
+    const info = document.createElement("div");
+    const nameButton = document.createElement("button");
+    nameButton.className = "name-button";
+    nameButton.type = "button";
+
+    const nameSpan = document.createElement("span");
+    nameSpan.className = "demon-name";
+    nameSpan.textContent = name;
+    nameButton.appendChild(nameSpan);
+    nameButton.addEventListener("click", () => openDemon(demon, rank, label));
+
+    const creatorEl = document.createElement("div");
+    creatorEl.className = "creator";
+    creatorEl.textContent = t("published_by") + creator;
+
+    info.append(nameButton, creatorEl);
+
+    const tryWrap = document.createElement("div");
+    tryWrap.className = "row-try";
+    tryWrap.appendChild(createTryButton(name));
+
+    row.append(rankEl, thumbButton, info, tryWrap);
+    target.appendChild(row);
+  });
+
+  return shown;
+}
+
+function renderList(filter = "") {
+  const query = filter.trim().toLowerCase();
+
+  const shown = renderRows(listEl, demons, query, false);
+  countEl.textContent = t("showing_demons", { a: shown, b: demons.length });
+
+  /* Sezione training: nascosta se la ricerca non trova nulla al suo interno */
+  const section = document.getElementById("training-section");
+  const tList = document.getElementById("training-list");
+  const tCount = document.getElementById("training-count");
+  const tShown = renderRows(tList, trainingDemons, query, true);
+  section.style.display = (query && !tShown) ? "none" : "block";
+  if (!trainingDemons.length) {
+    tCount.textContent = "";
+    const empty = document.createElement("div");
+    empty.className = "training-empty";
+    empty.textContent = t("training_empty");
+    tList.appendChild(empty);
+  } else {
+    tCount.textContent = t("showing_demons", { a: tShown, b: trainingDemons.length });
+  }
+}
+
+searchEl.addEventListener("input", () => renderList(searchEl.value));
+
+document.getElementById("back-button").addEventListener("click", () => openPage("list-page"));
+document.getElementById("home-link").addEventListener("click", event => {
+  event.preventDefault();
+  openPage("list-page");
+});
+document.getElementById("info-link").addEventListener("click", event => {
+  event.preventDefault();
+  openPage("info-page");
+});
+document.getElementById("players-search").addEventListener("input", e => {
+  currentFilter = e.target.value;
+  shownPlayers = PLAYERS_CHUNK;
+  renderPlayers();
+});
+document.getElementById("players-more").addEventListener("click", () => {
+  shownPlayers += PLAYERS_CHUNK;
+  renderPlayers();
+});
+document.getElementById("player-back").addEventListener("click", () => {
+  openPage("detail-page");
+  if (currentDemon) setVideo("demon", levelVideo(currentDemon.name));
+});
+document.getElementById("info-back").addEventListener("click", () => openPage("list-page"));
+
+/* Pagina Info e link Discord: contenuti presi da info.js */
+function renderInfo() {
+  const data = (typeof INFO_CONTENT !== "undefined") ? INFO_CONTENT : {};
+  document.getElementById("info-content").innerHTML = data[lang] || data.en || "";
+}
+document.getElementById("submit-link").href =
+  (typeof DISCORD_URL !== "undefined" && DISCORD_URL) ? DISCORD_URL : "#";
+
+function applyLang() {
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll("[data-i18n-html]").forEach(el => { el.innerHTML = t(el.dataset.i18nHtml); });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
+  document.querySelectorAll(".lang-btn").forEach(b => b.classList.toggle("active", b.dataset.lang === lang));
+  renderList(searchEl.value);
+  renderInfo();
+  if (currentDemon) refreshDetail();
+  if (currentPlayer) refreshPlayer();
+  if (playersLoaded[currentLevel]) renderPlayers();
+}
+document.querySelectorAll(".lang-btn").forEach(b => {
+  b.addEventListener("click", () => { lang = b.dataset.lang; applyLang(); });
+});
+
+applyLang();
+</script>
+</body>
+</html>
