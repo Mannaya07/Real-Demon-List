@@ -75,7 +75,7 @@ registerPlayers("Cognition", [
 
 ]);
 */
-registerPlayers("Fusion Z", [
+registerPlayers("Black Blizzard", [
 
   ["GuitarHeroStyles", "https://youtu.be/8CIbEUmGUkA"],
 
