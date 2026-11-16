@@ -66,5 +66,5 @@ Per pochi giocatori usa un solo file e aggiungi righe. Gli altri file servono so
 */
 
 registerPlayers("Acu", [
-  ["Patore109", "completions/Acu/Acu Patore.mp4"]
+  ["Patore109", "https://youtu.be/-PTYATx2EEI"]
 ]);

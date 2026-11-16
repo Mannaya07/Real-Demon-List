@@ -1,0 +1,83 @@
+/* =====================================================================
+   COME COMPILARE UN FILE PLAYERS  (copia questo file e rinominalo)
+   =====================================================================
+
+   1) NOME DEL FILE = nome ESATTO del livello (maiuscole e spazi inclusi)
+        livello "Acu"              ->  players/Acu.js
+        livello "Sonic Wave Infinity" -> players/Sonic Wave Infinity.js
+
+   2) Dentro il file c'e' UNA sola chiamata registerPlayers.
+      Il primo valore e' il nome del livello (identico al file).
+      Poi una lista [ ... ] con un giocatore per riga.
+
+   3) Ogni giocatore e' una riga fra parentesi quadre, separata da VIRGOLA:
+
+        ["NomeGiocatore"]
+            -> cerca il video in:  completions/<Livello>/NomeGiocatore.mp4
+
+        ["NomeGiocatore", "percorso/del/video.mp4"]
+            -> usa quel video (il percorso va SEMPRE tra virgolette)
+
+   4) L'ultima riga NON vuole la virgola finale (le altre si').
+   ===================================================================== */
+/*
+registerPlayers("Acu", [
+
+  // Video di default: completions/Acu/Patore109.mp4
+  ["Patore109"],
+
+  // Video con nome diverso (il percorso e' il SECONDO valore, tra virgolette):
+  ["Altro Player", "completions/Acu/Acu Patore.mp4"],
+
+  // Ultimo giocatore: niente virgola dopo la parentesi
+  ["Terzo Player"]
+
+]);
+
+
+e se ne devo creare un'altro di Acu con un'altro player? come faccio? faccio un file che si chiama " Acu1.js"?
+
+Deciding whether the second file will load.
+
+No, Acu1.js non verrebbe mai caricato: il sito cerca solo Acu.js e poi Acu.2.js, Acu.3.js e così via.
+
+Il modo più semplice è aggiungere una riga nello stesso players/Acu.js:
+
+js
+registerPlayers("Acu", [
+  ["Patore109", "completions/Acu/Acu Patore.mp4"],
+  ["Secondo Player", "completions/Acu/Acu Secondo.mp4"]
+]);
+
+Ricorda la virgola dopo ogni riga tranne l’ultima.
+
+Se il file diventa enorme (ad esempio con centinaia di migliaia di nomi) puoi spezzarlo in più file con lo stesso livello:
+
+players/Acu.js
+players/Acu.2.js
+players/Acu.3.js
+
+Ognuno contiene la sua chiamata registerPlayers("Acu", [ ... ]), sempre con il nome "Acu" e mai "Acu2". Il sito li carica in ordine e unisce tutti i giocatori in un’unica lista.
+
+I numeri devono essere consecutivi: se c’è Acu.js e Acu.3.js ma manca Acu.2.js, il sito si ferma al primo file mancante e non legge Acu.3.js. Inoltre Acu.2.js viene letto solo se esiste anche Acu.js.
+
+Per pochi giocatori usa un solo file e aggiungi righe. Gli altri file servono solo quando uno diventa troppo pesante.
+
+registerPlayers("Cognition", [
+
+  ["Niccuccio", "https://youtu.be/8ljkT1By0zY?is=C4FXMjwMbGsi_OnL"],
+
+  ["Altro Player", "https://www.youtube.com/watch?v=YYYYYYYYYYY"],
+
+  ["Terzo Player"]
+
+]);
+*/
+
+
+registerPlayers("Sonic Wave", [
+
+  ["Dorami", "https://youtu.be/HaUNAIK8ivo"],
+
+
+]);
