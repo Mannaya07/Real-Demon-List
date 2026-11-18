@@ -68,8 +68,6 @@ Per pochi giocatori usa un solo file e aggiungi righe. Gli altri file servono so
 registerPlayers("Acu", [
 
   ["Patore109", "https://youtu.be/-PTYATx2EEI"],
-  ["xPower55HD", "https://youtu.be/EFWoT1VUxAM?is=55NdKJWGMvb7jEVQ"]
+  ["xPower55HD", "https://youtu.be/EFWoT1VUxAM?is=55NdKJWGMvb7jEVQ"],
 
 ]);
-
-
