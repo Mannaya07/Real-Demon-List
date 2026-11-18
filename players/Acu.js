@@ -45,8 +45,8 @@ Il modo più semplice è aggiungere una riga nello stesso players/Acu.js:
 
 js
 registerPlayers("Acu", [
-  ["Patore109", "completions/Acu/Acu Patore.mp4"],
-  ["Secondo Player", "completions/Acu/Acu Secondo.mp4"]
+  ["Patore109", "https://youtu.be/-PTYATx2EEI"],
+  ["Secondo Player", "https://youtu.be/-PTYATx2EEI"]
 ]);
 
 Ricorda la virgola dopo ogni riga tranne l’ultima.
@@ -70,7 +70,6 @@ registerPlayers("Acu", [
   ["Patore109", "https://youtu.be/-PTYATx2EEI"],
   ["xPower55HD", "https://youtu.be/EFWoT1VUxAM?is=55NdKJWGMvb7jEVQ"]
 
-  https://youtu.be/EFWoT1VUxAM?is=55NdKJWGMvb7jEVQ
 ]);
 
 
